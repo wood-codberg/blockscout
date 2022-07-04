@@ -107,11 +107,7 @@ defmodule Indexer.Supervisor do
 
     basic_fetchers = [
       # Root fetchers
-      {Catchup.Supervisor,
-       [
-         %{block_fetcher: block_fetcher, block_interval: block_interval, memory_monitor: memory_monitor},
-         [name: Catchup.Supervisor]
-       ]},
+      {PendingTransaction.Supervisor, [[json_rpc_named_arguments: json_rpc_named_arguments]]},
 
       # Async catchup fetchers
       {UncleBlock.Supervisor, [[block_fetcher: block_fetcher, memory_monitor: memory_monitor]]},
@@ -142,12 +138,15 @@ defmodule Indexer.Supervisor do
       {PendingOpsCleaner, [[], []]}
     ]
 
-    all_fetchers =
-      [
-        {PendingTransaction.Supervisor, [[json_rpc_named_arguments: json_rpc_named_arguments]]}
-      ] ++
-        realtime_fetcher ++
-        basic_fetchers
+    catchup_fetcher = [
+      {Catchup.Supervisor,
+       [
+         %{block_fetcher: block_fetcher, block_interval: block_interval, memory_monitor: memory_monitor},
+         [name: Catchup.Supervisor]
+       ]}
+    ]
+
+    all_fetchers = basic_fetchers ++ realtime_fetcher ++ catchup_fetcher
 
     Supervisor.init(
       all_fetchers,
