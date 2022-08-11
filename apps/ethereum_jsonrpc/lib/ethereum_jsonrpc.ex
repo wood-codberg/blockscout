@@ -383,7 +383,9 @@ defmodule EthereumJSONRPC do
   @doc """
   Converts `t:quantity/0` to `t:non_neg_integer/0`.
   """
-  @spec quantity_to_integer(quantity) :: non_neg_integer() | :error
+  @spec quantity_to_integer(quantity) :: non_neg_integer() | :error | nil
+  def quantity_to_integer(nil), do: nil
+
   def quantity_to_integer("0x" <> hexadecimal_digits) do
     String.to_integer(hexadecimal_digits, 16)
   end
