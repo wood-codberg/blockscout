@@ -102,7 +102,8 @@ config :block_scout_web,
   new_tags: System.get_env("NEW_TAGS"),
   chain_id: System.get_env("CHAIN_ID"),
   json_rpc: System.get_env("JSON_RPC"),
-  verification_max_libraries: verification_max_libraries
+  verification_max_libraries: verification_max_libraries,
+  ens_metadata_server: System.get_env("ENS_METADATA_SERVER")
 
 default_api_rate_limit = 50
 default_api_rate_limit_str = Integer.to_string(default_api_rate_limit)
@@ -361,6 +362,13 @@ config :explorer, Explorer.Account,
     template: System.get_env("ACCOUNT_SENDGRID_TEMPLATE")
   ]
 
+config :explorer, Explorer.ENS.NameRetriever,
+  enabled:
+    System.get_env("ENABLE_ENS") == "true" &&
+      (System.get_env("ENS_REGISTRY_ADDRESS") != nil || System.get_env("ENS_RESOLVER_ADDRESS") != nil),
+  registry_address: System.get_env("ENS_REGISTRY_ADDRESS"),
+  resolver_address: System.get_env("ENS_RESOLVER_ADDRESS")
+
 {token_id_migration_first_block, _} = Integer.parse(System.get_env("TOKEN_ID_MIGRATION_FIRST_BLOCK", "0"))
 {token_id_migration_concurrency, _} = Integer.parse(System.get_env("TOKEN_ID_MIGRATION_CONCURRENCY", "1"))
 {token_id_migration_batch_size, _} = Integer.parse(System.get_env("TOKEN_ID_MIGRATION_BATCH_SIZE", "500"))
@@ -457,6 +465,11 @@ config :indexer, Indexer.Fetcher.TokenUpdater.Supervisor,
 
 config :indexer, Indexer.Fetcher.EmptyBlocksSanitizer.Supervisor,
   disabled?: System.get_env("INDEXER_DISABLE_EMPTY_BLOCK_SANITIZER", "false") == "true"
+
+config :indexer, Indexer.Fetcher.ENSName.Supervisor,
+  disabled?:
+    !(System.get_env("ENABLE_ENS") == "true" &&
+        (System.get_env("ENS_REGISTRY_ADDRESS") != nil || System.get_env("ENS_RESOLVER_ADDRESS") != nil))
 
 config :indexer, Indexer.Supervisor, enabled: System.get_env("DISABLE_INDEXER") != "true"
 
