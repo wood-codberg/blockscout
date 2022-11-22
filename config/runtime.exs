@@ -362,12 +362,16 @@ config :explorer, Explorer.Account,
     template: System.get_env("ACCOUNT_SENDGRID_TEMPLATE")
   ]
 
+ens_registry_address = System.get_env("ENS_REGISTRY_ADDRESS")
+ens_resolver_address = System.get_env("ENS_RESOLVER_ADDRESS")
+
+ens_enabled? =
+  System.get_env("ENABLE_ENS") == "true" and (not is_nil(ens_registry_address) or not is_nil(ens_resolver_address))
+
 config :explorer, Explorer.ENS.NameRetriever,
-  enabled:
-    System.get_env("ENABLE_ENS") == "true" &&
-      (System.get_env("ENS_REGISTRY_ADDRESS") != nil || System.get_env("ENS_RESOLVER_ADDRESS") != nil),
-  registry_address: System.get_env("ENS_REGISTRY_ADDRESS"),
-  resolver_address: System.get_env("ENS_RESOLVER_ADDRESS")
+  enabled: ens_enabled?,
+  registry_address: ens_registry_address,
+  resolver_address: ens_resolver_address
 
 {token_id_migration_first_block, _} = Integer.parse(System.get_env("TOKEN_ID_MIGRATION_FIRST_BLOCK", "0"))
 {token_id_migration_concurrency, _} = Integer.parse(System.get_env("TOKEN_ID_MIGRATION_CONCURRENCY", "1"))
@@ -466,10 +470,7 @@ config :indexer, Indexer.Fetcher.TokenUpdater.Supervisor,
 config :indexer, Indexer.Fetcher.EmptyBlocksSanitizer.Supervisor,
   disabled?: System.get_env("INDEXER_DISABLE_EMPTY_BLOCK_SANITIZER", "false") == "true"
 
-config :indexer, Indexer.Fetcher.ENSName.Supervisor,
-  disabled?:
-    !(System.get_env("ENABLE_ENS") == "true" &&
-        (System.get_env("ENS_REGISTRY_ADDRESS") != nil || System.get_env("ENS_RESOLVER_ADDRESS") != nil))
+config :indexer, Indexer.Fetcher.ENSName.Supervisor, disabled?: not ens_enabled?
 
 config :indexer, Indexer.Supervisor, enabled: System.get_env("DISABLE_INDEXER") != "true"
 

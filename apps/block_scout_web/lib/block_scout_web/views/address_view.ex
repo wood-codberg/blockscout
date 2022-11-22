@@ -479,7 +479,10 @@ defmodule BlockScoutWeb.AddressView do
   def check_custom_abi_for_having_write_functions(custom_abi),
     do: !is_nil(custom_abi) && Enum.any?(custom_abi.abi, &Writer.write_function?(&1))
 
-  def ens_avatar_url(address) do
-    "#{Application.get_env(:block_scout_web, :ens_metadata_server)}/avatar/#{primary_name(address)}"
+  def ens_avatar_url(address_name) do
+    case Application.get_env(:block_scout_web, :ens_metadata_server) do
+      nil -> ""
+      ens_metadata_server -> "#{ens_metadata_server}/avatar/#{address_name}"
+    end
   end
 end
