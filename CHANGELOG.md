@@ -49,6 +49,7 @@
 - [#6327](https://github.com/blockscout/blockscout/pull/6327) - Fix and refactor address logs page and search
 - [#6449](https://github.com/blockscout/blockscout/pull/6449) - Search min_missing_block_number from zero
 - [#6492](https://github.com/blockscout/blockscout/pull/6492) - Remove token instance owner fetching
+- [#6501](https://github.com/blockscout/blockscout/pull/6501) - Fix wss connect
 
 ### Chore
 
