@@ -2,6 +2,7 @@
 
 ### Features
 
+- [#6541](https://github.com/blockscout/blockscout/pull/6541) - Integrate sig provider
 - [#5561](https://github.com/blockscout/blockscout/pull/5561), [#6523](https://github.com/blockscout/blockscout/pull/6523) - Improve working with contracts implementations
 - [#6401](https://github.com/blockscout/blockscout/pull/6401) - Add Sol2Uml contract visualization
 - [#6481](https://github.com/blockscout/blockscout/pull/6481) - Smart contract verification improvements
