@@ -3488,3 +3488,13 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "truffle flattener"
 msgstr ""
+
+#: lib/block_scout_web/templates/layout/_account_menu_item.html.eex:29
+#, elixir-autogen, elixir-format
+msgid "Sign in"
+msgstr ""
+
+#: lib/block_scout_web/templates/layout/_account_menu_item.html.eex:11
+#, elixir-autogen, elixir-format
+msgid "Signed in as "
+msgstr ""
