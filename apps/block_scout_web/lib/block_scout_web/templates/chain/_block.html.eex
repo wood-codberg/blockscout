@@ -1,5 +1,6 @@
 <div class="col-lg-3 fade-up-blocks-chain" data-selector="chain-block" data-block-number="<%= @block.number %>">
-  <div class="tile tile-type-block n-p d-flex flex-column">
+  <%# <div class="tile tile-type-block n-p d-flex flex-column" style="border-left:0;" > %>
+  <div class="tile tile-type-block n-p d-flex flex-column" >
     <%= link(
           @block,
           class: "tile-title",

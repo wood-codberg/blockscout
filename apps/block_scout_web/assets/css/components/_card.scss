@@ -7,6 +7,7 @@ $card-background-1: $primary !default;
 $card-background-1-text-color: #fff !default;
 $card-tab-icon-color: #20b760 !default;
 $card-tab-icon-color-active: #fff !default;
+$tail-base-color-hover: #007bff !default;
 
 .card {
   background-color: $card-background-color;
@@ -184,6 +185,17 @@ $card-tab-icon-color-active: #fff !default;
 
   .tile {
     margin-bottom: 0;
+    &:hover{
+     .tile-transaction-type-block{
+       color: $tail-base-color-hover;
+       background-color: transparent;
+       border-left: 4px solid $tail-base-color-hover;
+       border-bottom: 1px solid $tail-base-color-hover;
+       border-right: 1px solid $tail-base-color-hover;
+       border-top: 1px solid $tail-base-color-hover;
+       border-radius: 4px 0 0 4px;
+      }
+    }
   }
 }
 
