@@ -8,8 +8,10 @@ export async function addChainToMM ({ btn }) {
     const coinName = document.getElementById('js-coin-name').value
     const subNetwork = document.getElementById('js-subnetwork').value
     const jsonRPC = document.getElementById('js-json-rpc').value
+    const path = process.env.NETWORK_PATH || '/'
 
-    const blockscoutURL = location.protocol + '//' + location.host + process.env.NETWORK_PATH
+    const blockscoutURL = location.protocol + '//' + location.host + path
+
     if (chainIDFromWallet !== chainIDFromInstance) {
       await window.ethereum.request({
         method: 'wallet_addEthereumChain',
@@ -22,7 +24,8 @@ export async function addChainToMM ({ btn }) {
             decimals: 18
           },
           rpcUrls: [jsonRPC],
-          blockExplorerUrls: [blockscoutURL]
+          blockExplorerUrls: ['https://testnet-scan.gmmtchain.io/']
+          // blockExplorerUrls: [blockscoutURL]
         }]
       })
     } else {
@@ -32,7 +35,6 @@ export async function addChainToMM ({ btn }) {
         trigger: 'click',
         placement: 'bottom'
       }).tooltip('show')
-
       setTimeout(() => {
         btn.tooltip('dispose')
       }, 3000)
